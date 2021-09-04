@@ -4,20 +4,20 @@ import { isConstructorDeclaration } from "typescript";
 
 type format = {
   question: string;
-  answer: string[];
+  answers: string[];
   callback: any;
-  userAnswer: string;
+  userAnswer: any;
   questionNo: number;
   questionTotal: number;
 };
 
 class Questions extends React.Component {
   constructor() {
-    super();
+    super(props);
 
     this.state = {
       question,
-      answer,
+      answers,
       callback,
       userAnswer,
       questionNo,
@@ -28,7 +28,18 @@ class Questions extends React.Component {
   render() {
     return (
       <div>
-        <h1>{question}</h1>
+        <p className="questionNumber">
+          Question: {questionNo} / {questionTotal}
+        </p>
+        <p>question: {question}</p>
+        <div>
+          {answers.map((answer) => (
+            <div>
+              <button disabled={userAnswer} onClick={callback} />
+              <p>{answer}</p>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
