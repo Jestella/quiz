@@ -1,48 +1,47 @@
-import { render } from "@testing-library/react";
 import React from "react";
-import { isConstructorDeclaration } from "typescript";
+import { AnswerObject } from "../../App";
+import { Wrapper, ButtonWrapper } from "./questions.styles";
 
-type format = {
+type Props = {
   question: string;
   answers: string[];
-  callback: any;
-  userAnswer: any;
+  callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  userAnswer: AnswerObject | undefined;
   questionNo: number;
   questionTotal: number;
 };
 
-class Questions extends React.Component {
-  constructor() {
-    super(props);
+const Questions: React.FC<Props> = ({
+  question,
+  answers,
+  callback,
+  userAnswer,
+  questionNo,
+  questionTotal,
+}) => (
+  <Wrapper>
+    <p className="questionNumber">
+      Question: {questionNo} / {questionTotal}
+    </p>
+    <p>question: {question}</p>
+    <div>
+      {answers.map((answer) => (
+        <ButtonWrapper
+          key={answer}
+          correct={userAnswer?.correctAnswer === answer}
+          userClicked={userAnswer?.answer === answer}
+        >
+          <button
+            disabled={userAnswer ? true : false}
+            value={answer}
+            onClick={callback}
+          />
 
-    this.state = {
-      question,
-      answers,
-      callback,
-      userAnswer,
-      questionNo,
-      questionTotal,
-    };
-  }
-
-  render() {
-    return (
-      <div>
-        <p className="questionNumber">
-          Question: {questionNo} / {questionTotal}
-        </p>
-        <p>question: {question}</p>
-        <div>
-          {answers.map((answer) => (
-            <div>
-              <button disabled={userAnswer} onClick={callback} />
-              <p>{answer}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-}
+          <p>{answer}</p>
+        </ButtonWrapper>
+      ))}
+    </div>
+  </Wrapper>
+);
 
 export default Questions;
