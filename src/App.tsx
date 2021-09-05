@@ -6,6 +6,13 @@ import { QuestionState, Difficulty } from "./components/API";
 
 import { GlobalStyle, Wrapper } from "./App.styles";
 
+//images
+import readyImage from "./images/ready.png";
+import greatImage from "./images/great.png";
+import notbadImage from "./images/notbad.png";
+import letmethink from "./images/letmething.png";
+import badImage from "./images/bad.png";
+
 export type AnswerObject = {
   question: string;
   answer: string;
@@ -65,8 +72,18 @@ const App = () => {
     <>
       <GlobalStyle />
       <Wrapper>
-        {" "}
-        <h1>Hello, Welcome to Quizzy.</h1>
+        <h1>You can sit with Stella.</h1>
+        <p>
+          How much do you know about me?
+          <br />
+          Let's see if you are ready to work with me.
+        </p>
+        <p className="emoji">🧐</p>
+
+        <div className="image_container">
+          <img src={readyImage} className="ready_image" />
+        </div>
+
         {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
           <button className="start_btn" onClick={askQuestion}>
             START

@@ -18,6 +18,15 @@ export const GlobalStyle = createGlobalStyle`
       text-align: center;
   }
 
+  .image_container {
+    margin: 10px;
+  }
+
+  img {
+    width: 500px;
+    
+  }
+
   .start_btn, .next_btn {
     backgrund-color: green;
     height: 40px;
@@ -33,8 +42,16 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
 
-  > p {
+  > h1 {
+    margin: 100px 10px 30px;
+  }
+
+  p {
     color: gray;
+  }
+
+  .emoji {
+    font-size: 28px;
   }
 
   .score {
