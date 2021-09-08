@@ -20,7 +20,7 @@ export type AnswerObject = {
   correctAnswer: string;
 };
 
-const TOTAL_QUESTIONS = 10;
+const TOTAL_QUESTIONS = 5;
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -43,7 +43,7 @@ const App = () => {
     setLoading(false);
   };
 
-  const answerQuestion = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!gameOver) {
       // User answer
       const answer = e.currentTarget.value;
@@ -68,6 +68,10 @@ const App = () => {
     }
   };
 
+  const prevQuestion = () => {
+    const prevQuestion = number - 1;
+  };
+
   return (
     <>
       <GlobalStyle />
@@ -80,16 +84,23 @@ const App = () => {
         </p>
         <p className="emoji">🧐</p>
 
-        <div className="image_container">
-          <img src={readyImage} className="ready_image" />
-        </div>
-
-        {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-          <button className="start_btn" onClick={askQuestion}>
-            START
-          </button>
+        {gameOver ? (
+          <div className="image_container">
+            <img src={readyImage} className="ready_image" />
+            <button className="start_btn" onClick={askQuestion}>
+              START
+            </button>
+          </div>
         ) : null}
-        {loading ? <p>loading questions now - 🦦 </p> : null}
+        {userAnswers.length === TOTAL_QUESTIONS ? (
+          <div className="image_container">
+            <img src={greatImage} className="great_image" />
+            <button className="start_btn" onClick={askQuestion}>
+              RESTART
+            </button>
+          </div>
+        ) : null}
+        {loading ? <p>loading questions now... 🦦 </p> : null}
         {!loading && !gameOver ? (
           <Questions
             questionNo={number + 1}
@@ -97,18 +108,23 @@ const App = () => {
             question={questions[number].question}
             answers={questions[number].answers}
             userAnswer={userAnswers ? userAnswers[number] : undefined}
-            callback={answerQuestion}
+            callback={checkAnswer}
           />
         ) : null}
         {!gameOver &&
         !loading &&
         userAnswers.length === number + 1 &&
         number !== TOTAL_QUESTIONS - 1 ? (
-          <button className="next_btn" onClick={nextQuestion}>
-            NEXT
-          </button>
+          <div>
+            <button className="prev_btn" onClick={prevQuestion}>
+              PREV
+            </button>
+            <button className="next_btn" onClick={nextQuestion}>
+              NEXT
+            </button>
+          </div>
         ) : null}
-        {!gameOver ? <p className="score">SCORE: {score * 10}%</p> : null}
+        {!gameOver ? <p className="score">SCORE: {score * 20}%</p> : null}
       </Wrapper>
     </>
   );

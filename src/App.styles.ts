@@ -20,6 +20,8 @@ export const GlobalStyle = createGlobalStyle`
 
   .image_container {
     margin: 10px;
+    display: grid;
+    grid-template-rows: 3fr 1fr;
   }
 
   img {
@@ -27,11 +29,12 @@ export const GlobalStyle = createGlobalStyle`
     
   }
 
-  .start_btn, .next_btn {
+  .start_btn,.prev_btn, .next_btn {
     backgrund-color: green;
     height: 40px;
     width: 100px;
     margin: 30px;
+    justify-self: center;
   }
 
   
@@ -43,11 +46,12 @@ export const Wrapper = styled.div`
   align-items: center;
 
   > h1 {
-    margin: 100px 10px 30px;
+    margin: 60px 10px 20px;
   }
 
   p {
     color: gray;
+    margin: 10px 0;
   }
 
   .emoji {
