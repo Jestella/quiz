@@ -21,7 +21,7 @@ export const GlobalStyle = createGlobalStyle`
   .image_container {
     margin: 10px;
     display: grid;
-    grid-template-rows: 3fr 1fr;
+    // grid-template-rows: 3fr 1fr;
   }
 
   img {

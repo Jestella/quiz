@@ -10,7 +10,7 @@ import { GlobalStyle, Wrapper } from "./App.styles";
 import readyImage from "./images/ready.png";
 import greatImage from "./images/great.png";
 import notbadImage from "./images/notbad.png";
-import letmethink from "./images/letmething.png";
+import letmethinkImage from "./images/letmethink.png";
 import badImage from "./images/bad.png";
 
 export type AnswerObject = {
@@ -95,6 +95,10 @@ const App = () => {
         {userAnswers.length === TOTAL_QUESTIONS ? (
           <div className="image_container">
             <img src={greatImage} className="great_image" />
+            <img src={notbadImage} className="notbad_image" />
+            <img src={letmethinkImage} className="letmethink_image" />
+            <img src={badImage} className="bad_image" />
+
             <button className="start_btn" onClick={askQuestion}>
               RESTART
             </button>
