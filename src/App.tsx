@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { fetchQuestions } from "./components/API";
 
-import Questions from "./components/questions/questions.components";
-import { QuestionState, Difficulty } from "./components/API";
+import QuestionCard from "./components/questions/question-card.components";
+import { Props } from "./components/questions/question-card.components";
 
 import { GlobalStyle, Wrapper } from "./App.styles";
 
@@ -13,34 +12,30 @@ import notbadImage from "./images/notbad.png";
 import letmethinkImage from "./images/letmethink.png";
 import badImage from "./images/bad.png";
 
-export type AnswerObject = {
+type AnswerObject = {
   question: string;
   answer: string;
-  correct: boolean;
-  correctAnswer: string;
+  correct: string;
 };
 
-const TOTAL_QUESTIONS = 5;
+const totalQuestions = 5;
 
 const App = () => {
-  const [loading, setLoading] = useState(false);
-  const [questions, setQuestions] = useState<QuestionState[]>([]);
-  const [number, setNumber] = useState(0);
-  const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
+  const [questions, setQuestions] = useState([]);
+  const [currentNumber, setCurrentNumber] = useState(0);
+  const [userAnswer, setUserAnswer] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
-  const [gameOver, setGameOver] = useState(true);
+  const [quizOver, setQuizOver] = useState(true);
 
-  const askQuestion = async () => {
-    setLoading(true);
-    setGameOver(false);
+  const startQuiz = async () => {
+    setQuizOver(false);
 
-    const newQuestions = await fetchQuestions(TOTAL_QUESTIONS, Difficulty.EASY);
+    const newQuestions = startQuiz; // fix this part!
 
-    setQuestions(newQuestions);
+    setQuestions(newQuestions); // fix this part!
     setScore(0);
-    setUserAnswers([]);
-    setNumber(0);
-    setLoading(false);
+    setUserAnswer([]);
+    setCurrentNumber(0);
   };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -55,14 +50,14 @@ const App = () => {
         correct,
         correctAnswer: questions[number].correct_answer,
       };
-      setUserAnswers((prev) => [...prev, answerObject]);
+      setUserAnswer((prev) => [...prev, answerObject]);
     }
   };
 
   const nextQuestion = () => {
     const nextQuestion = number + 1;
-    if (nextQuestion === TOTAL_QUESTIONS) {
-      setGameOver(true);
+    if (nextQuestion === totalQuestions) {
+      setQuizOver(true);
     } else {
       setNumber(nextQuestion);
     }
@@ -84,41 +79,36 @@ const App = () => {
         </p>
         <p className="emoji">🧐</p>
 
-        {gameOver ? (
+        {quizOver ? || userAnswer.length === totalQuestions ? (
           <div className="image_container">
             <img src={readyImage} className="ready_image" />
-            <button className="start_btn" onClick={askQuestion}>
+            <button className="start_btn" onClick={startQiz}>
               START
-            </button>
-          </div>
-        ) : null}
-        {userAnswers.length === TOTAL_QUESTIONS ? (
+            </button></div> ) : null} {!quizOver ? <p className="score">Your score: </p> : null}
+     
+
+        {userAnswers.length === totalQuestions ? (
           <div className="image_container">
             <img src={greatImage} className="great_image" />
-            <img src={notbadImage} className="notbad_image" />
-            <img src={letmethinkImage} className="letmethink_image" />
-            <img src={badImage} className="bad_image" />
 
-            <button className="start_btn" onClick={askQuestion}>
+            <button className="start_btn" onClick={startQuiz}>
               RESTART
             </button>
           </div>
         ) : null}
-        {loading ? <p>loading questions now... 🦦 </p> : null}
-        {!loading && !gameOver ? (
-          <Questions
-            questionNo={number + 1}
-            questionTotal={TOTAL_QUESTIONS}
+        {!quizOver ? (
+          <QuestionCard
+            questionNo={number + 1} // question Number starts from 1
+            questionTotal={totalQuestions}
             question={questions[number].question}
             answers={questions[number].answers}
             userAnswer={userAnswers ? userAnswers[number] : undefined}
             callback={checkAnswer}
           />
         ) : null}
-        {!gameOver &&
-        !loading &&
+        {!quizOver &&
         userAnswers.length === number + 1 &&
-        number !== TOTAL_QUESTIONS - 1 ? (
+        number !== totalQuestions - 1 ? (
           <div>
             <button className="prev_btn" onClick={prevQuestion}>
               PREV
@@ -128,7 +118,7 @@ const App = () => {
             </button>
           </div>
         ) : null}
-        {!gameOver ? <p className="score">SCORE: {score * 20}%</p> : null}
+        {!quizOver ? <p className="score">SCORE: {score * 20}%</p> : null}
       </Wrapper>
     </>
   );
