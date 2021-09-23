@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import QuestionCard from "./components/questions/question-card.components";
+import {QuestionCard} from "./components/questions/question-card.components";
 import { Props } from "./components/questions/question-card.components";
 
 import { GlobalStyle, Wrapper } from "./App.styles";
@@ -12,7 +12,7 @@ import notbadImage from "./images/notbad.png";
 import letmethinkImage from "./images/letmethink.png";
 import badImage from "./images/bad.png";
 
-type AnswerObject = {
+export type AnswerObject = {
   question: string;
   answer: string;
   correct: string;
@@ -39,33 +39,37 @@ const App = () => {
   };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!gameOver) {
+    if (!quizOver) {
       // User answer
       const answer = e.currentTarget.value;
-      const correct = questions[number].correct_answer === answer;
+      // Check if the answer is correct
+      const correct = questions[currentNumber].correct === answer;
+      // Add score
       if (correct) setScore((prev) => prev + 1);
+      // Save answer in the array for user answers
       const answerObject = {
-        question: questions[number].question,
+        question: questions[currentNumber].question,
         answer,
-        correct,
-        correctAnswer: questions[number].correct_answer,
+        correct: questions[currentNumber].correct,
       };
       setUserAnswer((prev) => [...prev, answerObject]);
     }
   };
 
+
+  const prevQuestion = () => {
+    const prevQuestion = currentNumber - 1;
+  };
+
   const nextQuestion = () => {
-    const nextQuestion = number + 1;
+    const nextQuestion = currentNumber + 1;
     if (nextQuestion === totalQuestions) {
       setQuizOver(true);
     } else {
-      setNumber(nextQuestion);
+      setCurrentNumber(nextQuestion);
     }
   };
 
-  const prevQuestion = () => {
-    const prevQuestion = number - 1;
-  };
 
   return (
     <>
@@ -82,12 +86,12 @@ const App = () => {
         {quizOver ? || userAnswer.length === totalQuestions ? (
           <div className="image_container">
             <img src={readyImage} className="ready_image" />
-            <button className="start_btn" onClick={startQiz}>
+            <button className="start_btn" onClick={startQuiz}>
               START
             </button></div> ) : null} {!quizOver ? <p className="score">Your score: </p> : null}
      
 
-        {userAnswers.length === totalQuestions ? (
+        {userAnswer.length === totalQuestions ? (
           <div className="image_container">
             <img src={greatImage} className="great_image" />
 
@@ -98,17 +102,17 @@ const App = () => {
         ) : null}
         {!quizOver ? (
           <QuestionCard
-            questionNo={number + 1} // question Number starts from 1
+            questionNo={currentNumber + 1} // question Number starts from 1
             questionTotal={totalQuestions}
-            question={questions[number].question}
-            answers={questions[number].answers}
-            userAnswer={userAnswers ? userAnswers[number] : undefined}
+            question={questions[currentNumber].question}
+            answers={questions[currentNumber].answers}
+            userAnswer={userAnswer ? userAnswer[currentNumber] : undefined}
             callback={checkAnswer}
           />
         ) : null}
         {!quizOver &&
-        userAnswers.length === number + 1 &&
-        number !== totalQuestions - 1 ? (
+        userAnswer.length === currentNumber + 1 &&
+        currentNumber !== totalQuestions - 1 ? (
           <div>
             <button className="prev_btn" onClick={prevQuestion}>
               PREV

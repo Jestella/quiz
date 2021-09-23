@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 
 import QuestionList from "./question-list";
-import { Props } from "../../App";
+import { AnswerObject } from "../../App";
 import { Wrapper, ButtonWrapper } from "./questions.styles";
 
 export type Props = {
   question: string;
   answers: string[];
-  correct: string;
-  userAnswer: string;
+  callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  userAnswer: AnswerObject | undefined;
   questionNo: number;
   totalQuestions: number;
 };
@@ -16,7 +16,7 @@ export type Props = {
 export const QuestionCard: React.FC<Props> = ({
   question,
   answers,
-  correct,
+  callback,
   userAnswer,
   questionNo,
   totalQuestions,
@@ -27,8 +27,15 @@ export const QuestionCard: React.FC<Props> = ({
     </p>
     <h1>{question}</h1>
     <div>
-      <button disabled={userAnswer} value={answer} onClick={callback} />
-      <p>{answer}</p>
+      {answers.map((answer) => (
+        <div key={answer}></div>
+      ))}
+      <button
+        disabled={userAnswer ? true : false} // or !!userAnswer
+        value={answers}
+        onClick={callback}
+      />
+      <p>{answers}</p>
     </div>
   </div>
 );
