@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import QuestionList from "./question-list";
 import { AnswerObject } from "../../App";
 import { Wrapper, ButtonWrapper } from "./questions.styles";
 
@@ -28,21 +27,22 @@ export const QuestionCard: React.FC<Props> = ({
     <h1>{question}</h1>
     <div>
       {answers.map((answer) => (
-        <div key={answer}></div>
+        <ButtonWrapper
+          key={answer}
+          correct={userAnswer?.correctAnswer === answer}
+          userClicked={userAnswer?.answer === answer}
+        >
+          <div key={answer}></div>
+          <button
+            disabled={userAnswer ? true : false} // or !!userAnswer
+            value={answers}
+            onClick={callback}
+          ></button>
+        </ButtonWrapper>
       ))}
-      <button
-        disabled={userAnswer ? true : false} // or !!userAnswer
-        value={answers}
-        onClick={callback}
-      />
       <p>{answers}</p>
     </div>
   </div>
 );
 
-export const QuestionBox = () => {
-  return QuestionList.map((question) => ({
-    ...question,
-    answers: [...question.answers],
-  }));
-};
+export const QuestionBox = () => {};

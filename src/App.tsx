@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import {
+  fetchQuizQuestions,
+  Question,
+  QuestionState,
+} from "./components/questions/API";
 
-import {QuestionCard} from "./components/questions/question-card.components";
+import { QuestionCard } from "./components/questions/question-card.components";
 import { Props } from "./components/questions/question-card.components";
-
 import { GlobalStyle, Wrapper } from "./App.styles";
 
 //images
@@ -15,27 +19,31 @@ import badImage from "./images/bad.png";
 export type AnswerObject = {
   question: string;
   answer: string;
-  correct: string;
+  correct: boolean;
+  correctAnswer: string;
 };
 
 const totalQuestions = 5;
 
 const App = () => {
-  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [questions, setQuestions] = useState<QuestionState[]>([]);
   const [currentNumber, setCurrentNumber] = useState(0);
   const [userAnswer, setUserAnswer] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
   const [quizOver, setQuizOver] = useState(true);
 
   const startQuiz = async () => {
+    setLoading(true);
     setQuizOver(false);
 
-    const newQuestions = startQuiz; // fix this part!
+    const newQuestions = await fetchQuizQuestions();
 
-    setQuestions(newQuestions); // fix this part!
+    setQuestions(newQuestions);
     setScore(0);
     setUserAnswer([]);
     setCurrentNumber(0);
+    setLoading(false);
   };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -43,19 +51,19 @@ const App = () => {
       // User answer
       const answer = e.currentTarget.value;
       // Check if the answer is correct
-      const correct = questions[currentNumber].correct === answer;
+      const correct = questions[currentNumber].correct_answer === answer;
       // Add score
       if (correct) setScore((prev) => prev + 1);
       // Save answer in the array for user answers
       const answerObject = {
         question: questions[currentNumber].question,
         answer,
-        correct: questions[currentNumber].correct,
+        correct,
+        correctAnswer: questions[currentNumber].correct_answer,
       };
       setUserAnswer((prev) => [...prev, answerObject]);
     }
   };
-
 
   const prevQuestion = () => {
     const prevQuestion = currentNumber - 1;
@@ -70,7 +78,6 @@ const App = () => {
     }
   };
 
-
   return (
     <>
       <GlobalStyle />
@@ -82,15 +89,16 @@ const App = () => {
           Let's see if you are ready to work with me.
         </p>
         <p className="emoji">🧐</p>
-
-        {quizOver ? || userAnswer.length === totalQuestions ? (
+        {quizOver || userAnswer.length === totalQuestions ? (
           <div className="image_container">
             <img src={readyImage} className="ready_image" />
             <button className="start_btn" onClick={startQuiz}>
               START
-            </button></div> ) : null} {!quizOver ? <p className="score">Your score: </p> : null}
-     
-
+            </button>
+          </div>
+        ) : null}
+        {!quizOver ? <p className="score">Your score: </p> : null}
+        {loading ? <p>Loding Questions... </p> : null}
         {userAnswer.length === totalQuestions ? (
           <div className="image_container">
             <img src={greatImage} className="great_image" />
@@ -100,10 +108,11 @@ const App = () => {
             </button>
           </div>
         ) : null}
-        {!quizOver ? (
+        {!quizOver && !quizOver ? (
           <QuestionCard
             questionNo={currentNumber + 1} // question Number starts from 1
-            questionTotal={totalQuestions}
+            // questionTotal={totalQuestions}
+            totalQuestions={totalQuestions}
             question={questions[currentNumber].question}
             answers={questions[currentNumber].answers}
             userAnswer={userAnswer ? userAnswer[currentNumber] : undefined}
@@ -111,6 +120,7 @@ const App = () => {
           />
         ) : null}
         {!quizOver &&
+        !loading &&
         userAnswer.length === currentNumber + 1 &&
         currentNumber !== totalQuestions - 1 ? (
           <div>
