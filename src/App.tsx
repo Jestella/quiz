@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-import {
-  fetchQuizQuestions,
-  Question,
-  QuestionState,
-} from "./components/questions/API";
+import { fetchQuizQuestions, QuestionState } from "./components/questions/API";
 
-import { QuestionCard } from "./components/questions/question-card.components";
-import { Props } from "./components/questions/question-card.components";
+import QuestionCard from "./components/questions/question-card.components";
 import { GlobalStyle, Wrapper } from "./App.styles";
 
 //images
@@ -23,12 +18,12 @@ export type AnswerObject = {
   correctAnswer: string;
 };
 
-const totalQuestions = 5;
+const TOTAL_QUESTIONS = 5;
 
-const App = () => {
+const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<QuestionState[]>([]);
-  const [currentNumber, setCurrentNumber] = useState(0);
+  const [number, setNumber] = useState(0);
   const [userAnswer, setUserAnswer] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
   const [quizOver, setQuizOver] = useState(true);
@@ -42,39 +37,40 @@ const App = () => {
     setQuestions(newQuestions);
     setScore(0);
     setUserAnswer([]);
-    setCurrentNumber(0);
+    setNumber(0);
     setLoading(false);
   };
 
-  const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const checkAnswer = (e: any) => {
     if (!quizOver) {
       // User answer
       const answer = e.currentTarget.value;
       // Check if the answer is correct
-      const correct = questions[currentNumber].correct_answer === answer;
+      const correct = questions[number].correct_answer === answer;
       // Add score
       if (correct) setScore((prev) => prev + 1);
       // Save answer in the array for user answers
       const answerObject = {
-        question: questions[currentNumber].question,
+        question: questions[number].question,
         answer,
         correct,
-        correctAnswer: questions[currentNumber].correct_answer,
+        correctAnswer: questions[number].correct_answer,
       };
       setUserAnswer((prev) => [...prev, answerObject]);
     }
   };
 
   const prevQuestion = () => {
-    const prevQuestion = currentNumber - 1;
+    const prevQ = number - 1;
   };
 
   const nextQuestion = () => {
-    const nextQuestion = currentNumber + 1;
-    if (nextQuestion === totalQuestions) {
+    const nextQ = number + 1;
+
+    if (nextQ === TOTAL_QUESTIONS) {
       setQuizOver(true);
     } else {
-      setCurrentNumber(nextQuestion);
+      setNumber(nextQ);
     }
   };
 
@@ -88,8 +84,8 @@ const App = () => {
           <br />
           Let's see if you are ready to work with me.
         </p>
-        <p className="emoji">🧐</p>
-        {quizOver || userAnswer.length === totalQuestions ? (
+
+        {quizOver || userAnswer.length === TOTAL_QUESTIONS ? (
           <div className="image_container">
             <img src={readyImage} className="ready_image" />
             <button className="start_btn" onClick={startQuiz}>
@@ -99,30 +95,25 @@ const App = () => {
         ) : null}
         {!quizOver ? <p className="score">Your score: </p> : null}
         {loading ? <p>Loding Questions... </p> : null}
-        {userAnswer.length === totalQuestions ? (
+        {userAnswer.length === TOTAL_QUESTIONS ? (
           <div className="image_container">
             <img src={greatImage} className="great_image" />
-
-            <button className="start_btn" onClick={startQuiz}>
-              RESTART
-            </button>
           </div>
         ) : null}
-        {!quizOver && !quizOver ? (
+        {!loading && !quizOver ? (
           <QuestionCard
-            questionNo={currentNumber + 1} // question Number starts from 1
-            // questionTotal={totalQuestions}
-            totalQuestions={totalQuestions}
-            question={questions[currentNumber].question}
-            answers={questions[currentNumber].answers}
-            userAnswer={userAnswer ? userAnswer[currentNumber] : undefined}
+            questionNo={number + 1} // question Number starts from 1
+            totalQuestions={TOTAL_QUESTIONS}
+            question={questions[number].question}
+            answers={questions[number].answers}
+            userAnswer={userAnswer ? userAnswer[number] : undefined}
             callback={checkAnswer}
           />
         ) : null}
         {!quizOver &&
         !loading &&
-        userAnswer.length === currentNumber + 1 &&
-        currentNumber !== totalQuestions - 1 ? (
+        userAnswer.length === number + 1 &&
+        number !== TOTAL_QUESTIONS - 1 ? (
           <div>
             <button className="prev_btn" onClick={prevQuestion}>
               PREV

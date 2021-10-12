@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
 import { AnswerObject } from "../../App";
-import { Wrapper, ButtonWrapper } from "./questions.styles";
+import { Wrapper, ButtonWrapper } from "./question-card.styles";
 
-export type Props = {
+type Props = {
   question: string;
   answers: string[];
   callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -12,7 +12,7 @@ export type Props = {
   totalQuestions: number;
 };
 
-export const QuestionCard: React.FC<Props> = ({
+const QuestionCard: React.FC<Props> = ({
   question,
   answers,
   callback,
@@ -20,11 +20,12 @@ export const QuestionCard: React.FC<Props> = ({
   questionNo,
   totalQuestions,
 }) => (
-  <div>
+  <Wrapper>
     <p className="number">
       Questions: {questionNo} / {totalQuestions}
     </p>
-    <h1>{question}</h1>
+    <p dangerouslySetInnerHTML={{ __html: question }} />
+
     <div>
       {answers.map((answer) => (
         <ButtonWrapper
@@ -42,7 +43,7 @@ export const QuestionCard: React.FC<Props> = ({
       ))}
       <p>{answers}</p>
     </div>
-  </div>
+  </Wrapper>
 );
 
-export const QuestionBox = () => {};
+export default QuestionCard;

@@ -1,5 +1,3 @@
-import { shuffleArray } from "./utils";
-
 export type Question = {
   question: string;
   correct_answer: string;
@@ -8,10 +6,13 @@ export type Question = {
 
 export type QuestionState = Question & { answers: string[] };
 
+const shuffleArray = (array: any[]) =>
+  [...array].sort(() => Math.random() - 0.5);
+
 export const fetchQuizQuestions = async (): Promise<QuestionState[]> => {
-  const endpoint = `https://s-quiz-api.herokuapp.com/quiz`;
+  const endpoint = `https://s-quiz-api.herokuapp.com/quiz/`;
   const data = await (await fetch(endpoint)).json();
-  return data.results.map((question: Question) => ({
+  return data.map((question: Question) => ({
     ...question,
     answers: shuffleArray([
       ...question.incorrect_answers,
