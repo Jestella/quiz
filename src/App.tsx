@@ -4,6 +4,8 @@ import { fetchQuizQuestions, QuestionState } from "./components/questions/API";
 import QuestionCard from "./components/questions/question-card.components";
 import { GlobalStyle, Wrapper } from "./App.styles";
 
+import { Results } from "./components/results/results";
+
 //images
 import readyImage from "./images/ready.png";
 import greatImage from "./images/great.png";
@@ -60,10 +62,6 @@ const App: React.FC = () => {
     }
   };
 
-  const prevQuestion = () => {
-    const prevQ = number - 1;
-  };
-
   const nextQuestion = () => {
     const nextQ = number + 1;
 
@@ -84,8 +82,7 @@ const App: React.FC = () => {
           <br />
           Let's see if you are ready to work with me.
         </p>
-
-        {quizOver || userAnswer.length === TOTAL_QUESTIONS ? (
+        {quizOver ? (
           <div className="image_container">
             <img src={readyImage} className="ready_image" />
             <button className="start_btn" onClick={startQuiz}>
@@ -93,13 +90,8 @@ const App: React.FC = () => {
             </button>
           </div>
         ) : null}
-        {!quizOver ? <p className="score">Your score: </p> : null}
         {loading ? <p>Loding Questions... </p> : null}
-        {userAnswer.length === TOTAL_QUESTIONS ? (
-          <div className="image_container">
-            <img src={greatImage} className="great_image" />
-          </div>
-        ) : null}
+
         {!loading && !quizOver ? (
           <QuestionCard
             questionNo={number + 1} // question Number starts from 1
@@ -110,20 +102,27 @@ const App: React.FC = () => {
             callback={checkAnswer}
           />
         ) : null}
+
         {!quizOver &&
         !loading &&
         userAnswer.length === number + 1 &&
         number !== TOTAL_QUESTIONS - 1 ? (
           <div>
-            <button className="prev_btn" onClick={prevQuestion}>
-              PREV
-            </button>
             <button className="next_btn" onClick={nextQuestion}>
               NEXT
             </button>
           </div>
         ) : null}
-        {!quizOver ? <p className="score">SCORE: {score * 20}%</p> : null}
+        {userAnswer.length === TOTAL_QUESTIONS ? (
+          <div className="image_container">
+            <p className="score">SCORE: {score}%</p>
+            <h2>ADD RESULTS IMAGE HERE!!!!!!</h2>
+            <div>{Results}</div>
+            <button className="start_btn" onClick={startQuiz}>
+              RESTART
+            </button>
+          </div>
+        ) : null}
       </Wrapper>
     </>
   );

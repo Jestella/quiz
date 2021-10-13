@@ -16,6 +16,7 @@ export const GlobalStyle = createGlobalStyle`
       margin: 0;
       padding: 0;
       text-align: center;
+      
   }
 
   .image_container {
@@ -47,9 +48,10 @@ export const Wrapper = styled.div`
 
   > h1 {
     margin: 60px 10px 20px;
+    font-size: 40px;
   }
 
-  p {
+  > p {
     color: gray;
     margin: 10px 0;
   }

@@ -1,7 +1,15 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  background-color: lightpink;
+  background-color: #fef1e6;
+  width: 460px;
+  border: 1px solid #fff;
+  padding: 20px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+
+  p {
+    font-size: 1rem;
+  }
 `;
 
 type ButtonWrapperProps = {
@@ -13,16 +21,17 @@ export const ButtonWrapper = styled.div<ButtonWrapperProps>`
   transition: all 0.3s ease;
 
   :hover {
-    opacity: 0.6;
+    opacity: 0.7;
   }
 
   button {
     cursor: pointer;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+    user-select: none;
+    width: 100%;
+    height: 30px;
     margin: 20px 0 10px;
     background: ${({ correct, userClicked }) =>
-      correct ? "blue" : !correct && userClicked ? "red" : "gray"};
+      correct ? "yellowgreen" : !correct && userClicked ? "red" : "lightgray"};
+    border: 1px solid pink;
   }
 `;
