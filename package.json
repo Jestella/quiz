@@ -1,6 +1,6 @@
 {
   "name": "quiz",
-  "homepage": "https://jestella.github.io/quiz",
+  "homepage": "https://jestella.github.io/quiz/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
