@@ -80,7 +80,7 @@ const App: React.FC = () => {
         <p>
           Are you here because you want to work with her?
           <br />
-          Play this <span className="span_main">Get-to-Know-Her Quiz</span>
+          Play this <span className="span_main">Get-to-Know-Her Quiz</span>{" "}
           first :)
         </p>
         {quizOver ? (
