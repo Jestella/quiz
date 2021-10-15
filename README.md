@@ -3,7 +3,7 @@
 building a quiz app for my future employers to get to know me better :)
 
 
-<img width="932" alt="Screen Shot 2021-09-14 at 4 47 03 PM" src="https://user-images.githubusercontent.com/31642902/133331563-45e83a8b-cfc4-44e5-80b3-78a6f3958f48.png">
+<img width="1379" alt="Screen Shot 2021-10-15 at 12 57 12 AM" src="https://user-images.githubusercontent.com/31642902/137434600-78a3b93d-981a-4cab-9510-d39ef8fb5b62.png">
 
 
 # Technologies used
