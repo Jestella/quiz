@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { fetchQuizQuestions, QuestionState } from "./components/questions/API";
 
 import QuestionCard from "./components/questions/question-card.components";
@@ -73,14 +73,15 @@ const App: React.FC = () => {
   };
 
   return (
-    <>
+    <Fragment>
       <GlobalStyle />
       <Wrapper>
-        <h1>You can sit with Stella.</h1>
+        <h1>You can work with Stella</h1>
         <p>
-          How much do you know about me?
+          Are you here because you want to work with her?
           <br />
-          Let's see if you are ready to work with me.
+          Play this <span className="span_main">Get-to-Know-Her Quiz</span>
+          first :)
         </p>
         {quizOver ? (
           <div className="image_container">
@@ -90,7 +91,7 @@ const App: React.FC = () => {
             </button>
           </div>
         ) : null}
-        {loading ? <p>Loding Questions... </p> : null}
+        {loading ? <p>Loding Questions... 💣</p> : null}
 
         {!loading && !quizOver ? (
           <QuestionCard
@@ -124,7 +125,7 @@ const App: React.FC = () => {
           </div>
         ) : null}
       </Wrapper>
-    </>
+    </Fragment>
   );
 };
 

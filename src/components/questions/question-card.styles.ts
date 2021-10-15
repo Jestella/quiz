@@ -2,9 +2,10 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   background-color: #fef1e6;
-  width: 460px;
+  width: 500px;
   border: 1px solid #fff;
   padding: 20px;
+  margin-top: 20px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
 
   p {
@@ -31,7 +32,7 @@ export const ButtonWrapper = styled.div<ButtonWrapperProps>`
     height: 30px;
     margin: 20px 0 10px;
     background: ${({ correct, userClicked }) =>
-      correct ? "yellowgreen" : !correct && userClicked ? "red" : "lightgray"};
-    border: 1px solid pink;
+      correct ? "#FF7997" : !correct && userClicked ? "red" : "#F3D5C0"};
+    border: 1px solid #fff;
   }
 `;
