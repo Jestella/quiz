@@ -5,8 +5,8 @@ export const Wrapper = styled.div`
   width: 500px;
   border: 1px solid #fff;
   padding: 20px;
-  margin-top: 20px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+  margin-top: 10px;
+  box-shadow: 0px 5px 5px lightgray;
 
   p {
     font-size: 1rem;
@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
 
   .question {
     font-weight: 600;
-    font-size: 18px;
+    font-size: 20px;
   }
 `;
 
@@ -44,5 +44,6 @@ export const ButtonWrapper = styled.div<ButtonWrapperProps>`
       correct ? "#FF7997" : !correct && userClicked ? "gray" : "#F3D5C0"};
     border: 1px solid #fff;
     border-radius: 20px;
+    font-size: 16px;
   }
 `;

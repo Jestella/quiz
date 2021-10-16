@@ -72,13 +72,13 @@ const App: React.FC = () => {
     <Fragment>
       <GlobalStyle />
       <Wrapper>
-        <h1>You can work with Stella</h1>
-        <p>
+        <h1 className="title_1">You can work with Stella</h1>
+        <h3 className="title_2">
           Are you here because you want to work with her?
           <br />
           Play this <span className="span_main">Get-to-Know-Her Quiz</span>{" "}
           first :)
-        </p>
+        </h3>
         {quizOver ? ( // main page
           <div className="image_container">
             <img src={readyImage} className="ready_image" />
