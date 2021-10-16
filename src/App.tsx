@@ -4,14 +4,10 @@ import { fetchQuizQuestions, QuestionState } from "./components/questions/API";
 import QuestionCard from "./components/questions/question-card.components";
 import { GlobalStyle, Wrapper } from "./App.styles";
 
-import { Results } from "./components/results/results";
-
 //images
 import readyImage from "./images/ready.png";
 import greatImage from "./images/great.png";
 import notbadImage from "./images/notbad.png";
-import letmethinkImage from "./images/letmethink.png";
-import badImage from "./images/bad.png";
 
 export type AnswerObject = {
   question: string;
@@ -83,7 +79,7 @@ const App: React.FC = () => {
           Play this <span className="span_main">Get-to-Know-Her Quiz</span>{" "}
           first :)
         </p>
-        {quizOver ? (
+        {quizOver ? ( // main page
           <div className="image_container">
             <img src={readyImage} className="ready_image" />
             <button className="start_btn" onClick={startQuiz}>
@@ -91,9 +87,9 @@ const App: React.FC = () => {
             </button>
           </div>
         ) : null}
-        {loading ? <p>Loding Questions... 💣</p> : null}
+        {loading ? <p>Loading Questions... 💣</p> : null}
 
-        {!loading && !quizOver ? (
+        {!loading && !quizOver ? ( // quiz page
           <QuestionCard
             questionNo={number + 1} // question Number starts from 1
             totalQuestions={TOTAL_QUESTIONS}
@@ -104,21 +100,26 @@ const App: React.FC = () => {
           />
         ) : null}
 
-        {!quizOver &&
+        {!quizOver && // next quiz until the last page
         !loading &&
         userAnswer.length === number + 1 &&
         number !== TOTAL_QUESTIONS - 1 ? (
-          <div>
-            <button className="next_btn" onClick={nextQuestion}>
-              NEXT
-            </button>
-          </div>
+          <button className="next_btn" onClick={nextQuestion}>
+            NEXT
+          </button>
         ) : null}
-        {userAnswer.length === TOTAL_QUESTIONS ? (
-          <div className="image_container">
-            <p className="score">SCORE: {score}%</p>
-            <h2>ADD RESULTS IMAGE HERE!!!!!!</h2>
-            <div>{Results}</div>
+
+        {userAnswer.length === TOTAL_QUESTIONS ? ( // quiz ends? show score & images
+          <div className="result_container">
+            <h2>
+              YOUR SCORE : <span className="score">{score * 20} </span>{" "}
+            </h2>
+            {score * 20 > 50 ? (
+              <img src={greatImage} className="result_image" />
+            ) : (
+              <img src={notbadImage} className="result_image" />
+            )}
+
             <button className="start_btn" onClick={startQuiz}>
               RESTART
             </button>

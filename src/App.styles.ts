@@ -47,7 +47,15 @@ export const GlobalStyle = createGlobalStyle`
   .start_btn:hover,
   .next_btn:hover {
     background-color: #F0D9FF;
+  }
 
+  .result_container {
+    display: grid;
+    grid-template-rows: 0.5fr 1fr 0.5fr;
+  }
+
+  .result_image {
+    width: 300px;
   }
   
 `;
@@ -58,7 +66,7 @@ export const Wrapper = styled.div`
   align-items: center;
 
   > h1 {
-    margin: 100px 10px 20px;
+    margin: 80px 10px 10px;
     font-size: 40px;
     // color: #fe8f8f;
     font-weight: 300;
