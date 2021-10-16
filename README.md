@@ -6,7 +6,7 @@ building a quiz app for my future employers so that they can get to know me bett
 
 https://jestella.github.io/quiz/
 
-<img width="1379" alt="Screen Shot 2021-10-15 at 12 57 12 AM" src="https://user-images.githubusercontent.com/31642902/137434600-78a3b93d-981a-4cab-9510-d39ef8fb5b62.png">
+<img width="1329" alt="Screen Shot 2021-10-16 at 12 46 18 AM" src="https://user-images.githubusercontent.com/31642902/137574103-2a8f5da8-9bd0-4837-9bca-5ba704d331fd.png">
 
 # Technologies used
 
